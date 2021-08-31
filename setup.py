@@ -6,8 +6,8 @@ with open("requirements.txt", "r") as fh:
 setup(
     name = "hoff-cli",
     author = "Dylan Justice",
-    description = "Python port of the and-cli by Brandon Scott",
-    version = "0.0.1",
+    description = "Python port of the and-cli",
+    version = "0.1.0",
     packages = "[hoff-cli]",
     install_requires = [req for req in requirements if req[:2] != "#"],
     include_package_data = True,
