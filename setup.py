@@ -8,12 +8,11 @@ setup(
     author = "Dylan Justice",
     description = "Python port of the and-cli",
     version = "0.1.0",
-    packages = "[hoff-cli]",
+    packages = [],
     install_requires = [req for req in requirements if req[:2] != "#"],
     include_package_data = True,
     entry_points = {
-        'console_scripts': [
-            'hoff = hoff-cli.hoff:main'
-        ]
+        'console_scripts': 
+            ['hoff=hoff_cli.hoff:main']
     }
 )

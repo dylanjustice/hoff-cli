@@ -31,9 +31,22 @@ Arguments:
 
 """
 from docopt import docopt
+import pkg_resources
+
+def version():
+    version = pkg_resources.require("hoff-cli")[0].version
+    print(version)
+
+def main():
+    arguments = docopt(__doc__, help=True)
+
+    if arguments['--version'] or arguments['-v']:
+        version()
+        exit(0)
+
+    print(arguments)
 
 if __name__ == '__main__':
-    arguments = docopt(__doc__, help=True)
-    print(arguments)
+    main()
 
     
