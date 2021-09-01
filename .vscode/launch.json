@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "hoff-cli:.venv/Scripts/hoff-script.importlib_load_entry_point (python3.9)",
+            "invokeTarget": {
+                "target": "code",
+                "projectRoot": "${workspaceFolder}/",
+                "lambdaHandler": ".venv/Scripts/hoff-script.importlib_load_entry_point"
+            },
+            "lambda": {
+                "runtime": "python3.9",
+                "payload": {},
+                "environmentVariables": {}
+            }
+        }
+    ]
+}

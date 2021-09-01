@@ -38,7 +38,7 @@ def version():
     print(version)
 
 def main():
-    arguments = docopt(__doc__, help=True)
+    arguments = docopt(doc=__doc__, help=True)
 
     if arguments['--version'] or arguments['-v']:
         version()
