@@ -1,19 +1,26 @@
-"""Usage: dotnet [options]
-Usage: dotnet [path-to-application]
 
-Options:
-  -h|--help         Display help.
-  --info            Display .NET information.
-  --list-sdks       Display the installed SDKs.
-  --list-runtimes   Display the installed runtimes.
+import click
+import subprocess
+@click.group()
+def dotnet():
+  """Run various dotnet commands for the project"""
+  pass
 
-path-to-application:
-  The path to an application .dll file to execute."""
+@dotnet.command()
+def info():
+  """Display .NET information"""
+  subprocess.run("dotnet --info")
 
-from docopt import docopt
+@dotnet.command(name="list-sdks")
+def list_sdks():
+  """Display install SDKs"""
+  subprocess.run("dotnet --list-sdks")
 
-def main(args):
-    print(args)
-if __name__ == '__main__':
-    arguments = docopt(__doc__, version="0.0.1")
-    print(arguments)
+@dotnet.command(name="list-runtimes")
+def list_runtimes():
+    """Display installed runtimes"""
+    subprocess.run("dotnet --list-runtimes")
+
+
+
+    
