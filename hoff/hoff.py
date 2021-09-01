@@ -1,18 +1,23 @@
 """
-#    #       ####  #    # ######    ##### #    # ######    #    #  ####  ###### ###### ### 
-#    #      #    # #    # #           #   #    # #         #    # #    # #      #      ### 
-#    #      #    # #    # #####       #   ###### #####     ###### #    # #####  #####   #  
-#    #      #    # #    # #           #   #    # #         #    # #    # #      #          
-#    #      #    #  #  #  #           #   #    # #         #    # #    # #      #      ### 
-#    ######  ####    ##   ######      #   #    # ######    #    #  ####  #      #      ### 
+"""
+import pkg_resources
+import click
 
-Usage:    hoff <argument> (--options)
 
-Options:
-    -v --version    output the version number
-    -h --help       Show this screen
+@click.group()
+def main():
+    """
+    Usage:    hoff <arguments> (--options)
 
-Arguments:
+    \b
+    #    #       ####  #    # ######    ##### #    # ######    #    #  ####  ###### ###### ### 
+    #    #      #    # #    # #           #   #    # #         #    # #    # #      #      ### 
+    #    #      #    # #    # #####       #   ###### #####     ###### #    # #####  #####   #  
+    #    #      #    # #    # #           #   #    # #         #    # #    # #      #          
+    #    #      #    #  #  #  #           #   #    # #         #    # #    # #      #      ### 
+    #    ######  ####    ##   ######      #   #    # ######    #    #  ####  #      #      ### 
+    
+    Commands:
     copy            Copy files and/or directories
     deploy          Deploy various application types
     dotnet          Run various dotnet commands for the project
@@ -27,26 +32,11 @@ Arguments:
     webpack         Run various webpack commands for the project
     webpack-test    Run various webpack test commands for the project
     workspace       Manage AndcultureCode projects workspace
-    help [command]  display help for command    
+    help [command]  display help for command
+    version         display hoff version    
 
-"""
-from docopt import docopt
-import pkg_resources
-
+    """
+@main.command()
 def version():
     version = pkg_resources.require("hoff-cli")[0].version
     print(version)
-
-def main():
-    arguments = docopt(doc=__doc__, help=True)
-
-    if arguments['--version'] or arguments['-v']:
-        version()
-        exit(0)
-
-    print(arguments)
-
-if __name__ == '__main__':
-    main()
-
-    

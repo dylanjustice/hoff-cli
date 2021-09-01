@@ -1,2 +1,2 @@
 # Argument parser packages
-docopt==0.6.2
+click==8.0.1

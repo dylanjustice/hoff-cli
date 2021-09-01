@@ -1,6 +1,13 @@
 {
     "configurations": [
         {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
             "type": "aws-sam",
             "request": "direct-invoke",
             "name": "hoff-cli:.venv/Scripts/hoff-script.importlib_load_entry_point (python3.9)",
