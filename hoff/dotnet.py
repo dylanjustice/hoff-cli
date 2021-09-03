@@ -1,11 +1,16 @@
+from modules.dotnet_restore import dotnet_restore
+from modules.dotnet_clean import dotnet_clean
 from click.exceptions import UsageError
-from modules.dotnet_path import solution_path, web_project_dir
+from modules.dotnet_path import solution_dir, solution_path, web_project_dir
 from modules.dotnet_build import dotnet_build
 import click
 import subprocess
 import os
 
-cmd = ["dotnet"]
+
+run_cmd = ["dotnet", "run", "--no-restore"]
+build_cmd = ["dotnet", "build", "--no-restore"]
+
 
 @click.group(invoke_without_command=True)
 @click.option("-b", "--build", is_flag=True)
@@ -20,15 +25,18 @@ def dotnet(ctx, restore, clean, build, watch, path):
     run(restore, clean, build, path)
   pass
 
+
 @dotnet.command()
 def info():
   """Display .NET information"""
   subprocess.run("dotnet --info")
 
+
 @dotnet.command(name="list-sdks")
 def list_sdks():
   """Display install SDKs"""
   subprocess.run("dotnet --list-sdks")
+
 
 @dotnet.command(name="list-runtimes")
 def list_runtimes():
@@ -37,30 +45,32 @@ def list_runtimes():
 
 
 def run(restore, clean, build, path):
+  cwd = os.getcwd()
   if path:
     os.chdir(path)
 
   solution_file = solution_path()
+  path = solution_path()
+
+
   if solution_file is None:
     exit(1)
+
   if clean:
-    print("clean")
+    result = dotnet_clean(path)
+    if not build and not restore:
+      exit(result)
   if restore:
-    print("restore")
-  
-  web_dir = web_project_dir()
-  if web_dir is None:
-    click.echo("Web project not found", err=True, color=True)
-    exit(1)
+    dotnet_restore(path)
 
-  os.chdir(web_dir)
+  cmd = run_cmd if build else build_cmd
 
-  if build:
-    cmd.append("build")
-    subprocess.run(cmd)
-  else:
-    cmd.append("run")
-    subprocess.run(cmd)
+  if path:
+    cmd.append(path)
+
+  subprocess.run(cmd)
+
+  os.chdir(cwd)
 
 
 dotnet.add_command(dotnet_build, "build")
