@@ -1,7 +1,8 @@
+from modules.echo import error
 from modules.dotnet_restore import dotnet_restore
 from modules.dotnet_clean import dotnet_clean
 from click.exceptions import UsageError
-from modules.dotnet_path import solution_dir, solution_path, web_project_dir
+from modules.dotnet_path import solution_dir, solution_path, web_project_dir, web_project_file_path
 from modules.dotnet_build import dotnet_build
 import click
 import subprocess
@@ -54,6 +55,7 @@ def run(restore, clean, build, path):
 
 
   if solution_file is None:
+    error("Solution file not found")
     exit(1)
 
   if clean:
@@ -63,10 +65,12 @@ def run(restore, clean, build, path):
   if restore:
     dotnet_restore(path)
 
-  cmd = run_cmd if build else build_cmd
+  path = web_project_dir()
+
+  cmd = run_cmd if not build else build_cmd
 
   if path:
-    cmd.append(path)
+    os.chdir(path)
 
   subprocess.run(cmd)
 

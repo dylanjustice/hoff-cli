@@ -1,25 +1,23 @@
-from glob import has_magic
-import os
+from modules.echo import info, error, success
 import subprocess
-import click
-from modules.dotnet_path import solution_dir
+
 cmd = ["dotnet", "restore"]
 
 def dotnet_restore(path=""):
     """Restore the dotnet solution from the root of the project via dotnet restore """
     if path:
         cmd.append(path)
-    click.echo("Restoring nuget packages (via %s" % " ".join(cmd))
+    info("Restoring nuget packages (via %s" % " ".join(cmd))
 
 
     result = subprocess.run(cmd)
     status = result.returncode
 
     if status != 0:
-        click.echo("Solution failed to restore. See output for details.")
+        error("Solution failed to restore. See output for details.")
         return status
 
-    click.echo("DOtnet solution restored!")
+    success("Dotnet solution restored!")
     return status
 
 
