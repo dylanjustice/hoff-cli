@@ -1,2 +1,0 @@
-# Argument parser packages
-click==8.0.1

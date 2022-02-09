@@ -1,13 +1,10 @@
-from .context import hoff
-import unittest
+import hoff.hoff
 
-class HoffTest(unittest.TestCase):
-    def when_hoff_called_given_no_arguments_then_returns_help(self):
-        hoff.main()
+def test_when_hoff_called_given_no_arguments_then_returns_help():
+    result = hoff.main()
+    assert result
 
-    def when_hoff_called_given_version_arg_then_returns_version(self):
-        hoff.main("-version")
-    
+def test_when_hoff_called_given_version_arg_then_returns_version():
+    result = hoff.main("-version")
+    assert result
 
-if __name__ == '__main':
-    unittest.main()

@@ -1,9 +1,7 @@
 from modules.echo import error
 from modules.dotnet_restore import dotnet_restore
 from modules.dotnet_clean import dotnet_clean
-from click.exceptions import UsageError
-from modules.dotnet_path import solution_dir, solution_path, web_project_dir, web_project_file_path
-from modules.dotnet_build import dotnet_build
+from modules.dotnet_path import solution_path, web_project_dir
 import click
 import subprocess
 import os
@@ -75,6 +73,3 @@ def run(restore, clean, build, path):
   subprocess.run(cmd)
 
   os.chdir(cwd)
-
-
-dotnet.add_command(dotnet_build, "build")
