@@ -1,25 +1,25 @@
-from dotnet import dotnet
+from commands.dotnet import dotnet
 import pkg_resources
 import click
 
 #region Commands
 
-@click.group(invoke_without_command=True)
-@click.option("-version", "--version", is_flag=True)
+@click.group()
+@click.option("-v", "--version", is_flag=True)
 def main(version):
+    """
+        \b
+        #    #       ####  #    # ######    ##### #    # ######    #    #  ####  ###### ###### ###
+        #    #      #    # #    # #           #   #    # #         #    # #    # #      #      ###
+        #    #      #    # #    # #####       #   ###### #####     ###### #    # #####  #####   #
+        #    #      #    # #    # #           #   #    # #         #    # #    # #      #
+        #    #      #    #  #  #  #           #   #    # #         #    # #    # #      #      ###
+        #    ######  ####    ##   ######      #   #    # ######    #    #  ####  #      #      ###
+        """
+
     if version:
         display_version()
-        pass
 
-    """
-    \b
-    #    #       ####  #    # ######    ##### #    # ######    #    #  ####  ###### ###### ###
-    #    #      #    # #    # #           #   #    # #         #    # #    # #      #      ###
-    #    #      #    # #    # #####       #   ###### #####     ###### #    # #####  #####   #
-    #    #      #    # #    # #           #   #    # #         #    # #    # #      #
-    #    #      #    #  #  #  #           #   #    # #         #    # #    # #      #      ###
-    #    ######  ####    ##   ######      #   #    # ######    #    #  ####  #      #      ###
-    """
 main.add_command(dotnet)
 
 #endregion Commands
@@ -29,6 +29,6 @@ main.add_command(dotnet)
 def display_version():
     """Display the current version of the hoff-cli"""
     version = pkg_resources.require("hoff-cli")[0].version
-    print(version)
+    print("hoff-cli version:" + version)
 
 #endregion Private Methods
