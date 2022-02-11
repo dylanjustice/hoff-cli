@@ -14,7 +14,7 @@ solution_file_path_globs = [
     "*.sln",
     "dotnet/*.sln",
     "dotnet/*/*.sln",
-    "**/*.sln",
+    "**/*.sln"
 ]
 web_project_file_path_globs = [
     "*.csproj",
@@ -26,6 +26,7 @@ web_project_file_path_globs = [
 
 def solution_path():
     for pattern in solution_file_path_globs:
+        print(os.getcwd())
         files = glob.glob(pattern)
         if files:
             return files[0]
