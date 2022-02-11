@@ -1,12 +1,9 @@
 
 from modules.echo import error, info
-import os
+from subprocess import CompletedProcess
 import shutil
 import subprocess
 import click
-
-from modules.dotnet_path import solution_dir
-
 
 cmd = ["dotnet", "clean"]
 
@@ -19,7 +16,7 @@ def dotnet_clean(path=""):
 
     info("Running dotnet clean (via %s on the solution)" % " ".join(cmd))
 
-    result = subprocess.run(cmd)
+    result: CompletedProcess = subprocess.run(cmd)
     status = result.returncode
 
     if status != 0:

@@ -10,37 +10,33 @@ from options.dotnet_run_options import DotnetRunOptions
 run_cmd = ["dotnet", "run", "--no-restore"]
 build_cmd = ["dotnet", "build", "--no-restore"]
 
-
 def dotnet_run(options: DotnetRunOptions):
-    """Run a .NET project"""
-    cwd = os.getcwd()
+  """Run a .NET project"""
+  cwd = os.getcwd()
 
-    if options.path:
-        os.chdir(options.path)
+  if options.path:
+    os.chdir(options.path)
 
-    solution_file = solution_path()
-    path = solution_path()
+  path = solution_path()
 
-    if solution_file is None:
-        error("Solution file not found")
-        exit(1)
+  if path is None:
+    error("Solution file not found")
+    exit(1)
 
-    if options.clean:
-        result = dotnet_clean(path)
+  if options.clean:
+    result = dotnet_clean(path)
+    if not options.build and not options.restore:
+      exit(result)
+  if options.restore:
+    dotnet_restore(path)
 
-        if not options.build and not options.restore:
-            exit(result)
+  path = web_project_dir()
 
-    if options.restore:
-        dotnet_restore(path)
+  cmd = run_cmd if not options.build else build_cmd
 
-    path = web_project_dir()
+  if path:
+    os.chdir(path)
 
-    cmd = run_cmd if not options.build else build_cmd
+  subprocess.run(cmd)
 
-    if path:
-        os.chdir(path)
-
-    subprocess.run(cmd)
-
-    os.chdir(cwd)
+  os.chdir(cwd)
