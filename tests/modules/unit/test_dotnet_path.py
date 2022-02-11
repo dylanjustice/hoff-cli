@@ -7,7 +7,7 @@ from pathlib import Path
 from faker import Faker
 from faker.providers import file
 import pytest
-from modules.dotnet_path import solution_dir, solution_path
+from modules.dotnet_path import solution_dir, solution_path, web_project_dir, web_project_file_path
 
 #region Setup
 
@@ -94,5 +94,84 @@ def test_solution_dir_when_files_is_empty_then_returns_None(tmp_path: Path):
     # Assert
     assert result is None
 
-
 #endregion solution_dir
+
+#region web_project_file_path
+
+@pytest.mark.parametrize(
+    argnames=["path", "file"],
+    argvalues=[
+        ["dotnet", "Web.csproj"],
+        ["dotnet/api/Presentation/Web","Web.csproj"],
+        ["","Random.csproj"],
+        ["random","Web.csproj"]
+])
+def test_web_project_file_path_when_sln_file_exists_then_returns_file_path(tmp_path: Path, path: str, file: str):
+    # Arrange
+    dotnet_path = tmp_path / path
+    dotnet_path.mkdir(parents=True, exist_ok=True)
+    proj_file_path = dotnet_path / file
+    proj_file_path.touch()
+    chdir(tmp_path)
+
+    # Act
+    result = web_project_file_path()
+
+    # Assert
+    assert result == str(proj_file_path.relative_to(tmp_path))
+
+def test_web_project_file_path_when_files_is_empty_then_returns_None(tmp_path: Path):
+    # Arrange
+    dotnet_path = tmp_path / fake.file_path(depth=2)
+    dotnet_path.mkdir(parents=True, exist_ok=True)
+    proj_file_path = dotnet_path / fake.file_name()
+    proj_file_path.touch()
+    chdir(tmp_path)
+
+    # Act
+    result = web_project_file_path()
+
+    # Assert
+    assert result is None
+
+#endregion web_project_file_path
+
+#region web_project_dir
+
+@pytest.mark.parametrize(
+    argnames=["path", "file"],
+    argvalues=[
+        ["dotnet", "Web.csproj"],
+        ["dotnet/api/Presentation/Web","Web.csproj"],
+        ["","Random.csproj"],
+        ["random","Web.csproj"]
+])
+def test_web_project_file_path_when_sln_file_exists_then_returns_file_path(tmp_path: Path, path: str, file: str):
+    # Arrange
+    dotnet_path = tmp_path / path
+    dotnet_path.mkdir(parents=True, exist_ok=True)
+    proj_file_path = dotnet_path / file
+    proj_file_path.touch()
+    chdir(tmp_path)
+
+    # Act
+    result = web_project_dir()
+
+    # Assert
+    assert result == str(dotnet_path.relative_to(tmp_path)).replace(".", "")
+
+def test_web_project_file_path_when_files_is_empty_then_returns_None(tmp_path: Path):
+    # Arrange
+    dotnet_path = tmp_path / fake.file_path(depth=2)
+    dotnet_path.mkdir(parents=True, exist_ok=True)
+    proj_file_path = dotnet_path / fake.file_name()
+    proj_file_path.touch()
+    chdir(tmp_path)
+
+    # Act
+    result = web_project_dir()
+
+    # Assert
+    assert result is None
+
+#endregion web_project_dir
