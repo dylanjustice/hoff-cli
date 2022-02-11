@@ -18,8 +18,6 @@ def main():
 
 main.add_command(dotnet)
 
-
-
 @main.command()
 def version():
     """Display the current version of the hoff-cli"""
