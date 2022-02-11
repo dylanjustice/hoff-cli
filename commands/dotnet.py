@@ -39,10 +39,10 @@ def list_runtimes():
 @dotnet.command()
 def run(restore, clean, build, path, watch):
     options = DotnetRunOptions(
-        restore=restore,
+        build=build,
         clean=clean,
         path=path,
-        watch=watch,
-        build=build
+        restore=restore,
+        watch=watch
     )
     dotnet_run(options)
