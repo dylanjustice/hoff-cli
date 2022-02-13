@@ -1,5 +1,5 @@
-import os
 import glob
+import os
 
 cli_file_path_glob = "Presentation/Cli/bin/Debug/**/*Cli.dll"
 data_project_file_paths_globs = [
@@ -26,7 +26,6 @@ web_project_file_path_globs = [
 
 def solution_path():
     for pattern in solution_file_path_globs:
-        print(os.getcwd())
         files = glob.glob(pattern)
         if files:
             return files[0]

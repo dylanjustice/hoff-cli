@@ -1,11 +1,11 @@
+import subprocess
 
 import click
-import subprocess
-from modules.dotnet_run import dotnet_run
-from options.dotnet_run_options import DotnetRunOptions
-
-run_cmd = ["dotnet", "run", "--no-restore"]
-build_cmd = ["dotnet", "build", "--no-restore"]
+from models.options.dotnet_run_options import DotnetRunOptions
+from models.result import Result
+from modules.dotnet_run import DotnetRun
+from modules.dotnet_test import DotnetTest
+from modules.echo import error
 
 
 @click.group()
@@ -31,13 +31,17 @@ def list_runtimes():
     subprocess.run("dotnet --list-runtimes")
 
 
-@click.option("-b", "--build", is_flag=True)
-@click.option("-c", "--clean", is_flag=True)
-@click.option("-R", "--restore", is_flag=True)
-@click.option("-w", "--watch", is_flag=True)
+@click.option("-b", "--build", is_flag=True, help="Build the solution before running")
+@click.option("-c", "--clean", is_flag=True, help="Clean the solution before building")
+@click.option("-R", "--restore", is_flag=True, help="Restore nuget packages before running")
+@click.option("-w", "--watch", is_flag=True, help="Run in watch mode")
 @click.argument("path", required=False)
 @dotnet.command()
 def run(restore, clean, build, path, watch):
+    """Run dotnet project or solution
+
+    PATH is the relative path to  a solution or project
+    """
     options = DotnetRunOptions(
         build=build,
         clean=clean,
@@ -45,4 +49,18 @@ def run(restore, clean, build, path, watch):
         restore=restore,
         watch=watch
     )
-    dotnet_run(options)
+    result = DotnetRun.run(options)
+    if result.hasError():
+        error(message=result.message)
+        exit(result.status_code)
+
+
+@click.option("--ci", is_flag=True, help="")
+@click.option("--coverage", is_flag=True)
+@click.option("--filter")
+@dotnet.command()
+def test(ci, filter, coverage):
+    result: Result = DotnetTest.run(ci, filter, coverage)
+    if result.hasError():
+        error(result.message)
+        exit(result.status_code)

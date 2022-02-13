@@ -1,42 +1,50 @@
-import subprocess
-from modules.echo import error
-from modules.dotnet_restore import dotnet_restore
-from modules.dotnet_clean import dotnet_clean
-from modules.dotnet_path import solution_path, web_project_dir
 import os
+import subprocess
 
-from options.dotnet_run_options import DotnetRunOptions
+from models.options.dotnet_run_options import DotnetRunOptions
+from models.result import Result
+
+from modules.dotnet_clean import DotnetClean
+from modules.dotnet_path import solution_path, web_project_dir
+from modules.dotnet_restore import DotnetRestore
 
 run_cmd = ["dotnet", "run", "--no-restore"]
 build_cmd = ["dotnet", "build", "--no-restore"]
 
-def dotnet_run(options: DotnetRunOptions):
-  """Run a .NET project"""
-  cwd = os.getcwd()
 
-  if options.path:
-    os.chdir(options.path)
+class DotnetRun:
+    # region Constants
 
-  path = solution_path()
+    ERR_SLN_NOT_FOUND: str = "Solution file not found."
 
-  if path is None:
-    error("Solution file not found")
-    exit(1)
+    # endregion Constants
 
-  if options.clean:
-    result = dotnet_clean(path)
-    if not options.build and not options.restore:
-      exit(result)
-  if options.restore:
-    dotnet_restore(path)
+    def run(self, options: DotnetRunOptions) -> Result:
+        """Run a .NET project"""
+        cwd = os.getcwd()
 
-  path = web_project_dir()
+        if options.path:
+            os.chdir(options.path)
 
-  cmd = run_cmd if not options.build else build_cmd
+        path = solution_path()
 
-  if path:
-    os.chdir(path)
+        if path is None:
+            return Result(1, self.ERR_SLN_NOT_FOUND)
 
-  subprocess.run(cmd)
+        if options.clean:
+            result = DotnetClean.run(path)
+            if not options.build and not options.restore:
+                exit(result)
+        if options.restore:
+            DotnetRestore.run(path)
 
-  os.chdir(cwd)
+        path = web_project_dir()
+
+        cmd = run_cmd if not options.build else build_cmd
+
+        if path:
+            os.chdir(path)
+
+        subprocess.run(cmd)
+
+        os.chdir(cwd)
