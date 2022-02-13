@@ -23,36 +23,36 @@ web_project_file_path_globs = [
     "**/*.csproj",
 ]
 
-
-def solution_path():
-    for pattern in solution_file_path_globs:
-        files = glob.glob(pattern)
-        if files:
-            return files[0]
-        continue
-    return None
-
-
-def solution_dir():
-    path = solution_path()
-    if path is None:
+class DotnetPath:
+    def solution_path():
+        for pattern in solution_file_path_globs:
+            files = glob.glob(pattern)
+            if files:
+                return files[0]
+            continue
         return None
 
-    return os.path.dirname(path)
+
+    def solution_dir(self):
+        path = self.solution_path()
+        if path is None:
+            return None
+
+        return os.path.dirname(path)
 
 
-def web_project_file_path():
-    for pattern in web_project_file_path_globs:
-        files = glob.glob(pattern)
-        if files:
-            return files[0]
-        continue
-    return None
-
-
-def web_project_dir():
-    path = web_project_file_path()
-    if path is None:
+    def web_project_file_path():
+        for pattern in web_project_file_path_globs:
+            files = glob.glob(pattern)
+            if files:
+                return files[0]
+            continue
         return None
 
-    return os.path.dirname(path)
+
+    def web_project_dir(self):
+        path = self.web_project_file_path()
+        if path is None:
+            return None
+
+        return os.path.dirname(path)
