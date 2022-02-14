@@ -1,31 +1,34 @@
-#region Setup
+# region Setup
 
-#endregion Setup
+# endregion Setup
 
 from os import chdir
 from pathlib import Path
+
+import pytest
 from faker import Faker
 from faker.providers import file
-import pytest
-from modules.dotnet_path import solution_dir, solution_path, web_project_dir, web_project_file_path
+from modules.dotnet_path import (DotnetPath, solution_dir, solution_path,
+                                 web_project_dir, web_project_file_path)
 
-#region Setup
+# region Setup
 
 Faker.seed()
 fake = Faker()
 
-#endregion Setup
+# endregion Setup
 
-#region solution_path
+# region solution_path
+
 
 @pytest.mark.parametrize(
     argnames=["path", "file"],
     argvalues=[
         ["dotnet", "Api.sln"],
-        ["dotnet/api","Api.sln"],
-        ["","Api.sln"],
-        ["dotnet/Cli","Cli.sln"]
-])
+        ["dotnet/api", "Api.sln"],
+        ["", "Api.sln"],
+        ["dotnet/Cli", "Cli.sln"]
+    ])
 def test_solution_path_when_sln_file_exists_then_returns_file_path(tmp_path: Path, path: str, file: str):
     # Arrange
     dotnet_path = tmp_path / path
@@ -35,10 +38,11 @@ def test_solution_path_when_sln_file_exists_then_returns_file_path(tmp_path: Pat
     chdir(tmp_path)
 
     # Act
-    result = solution_path()
+    result = DotnetPath.solution_path()
 
     # Assert
     assert result == str(sln_file_path.relative_to(tmp_path))
+
 
 def test_solution_path_when_files_is_empty_then_returns_None(tmp_path: Path):
     # Arrange
@@ -49,23 +53,24 @@ def test_solution_path_when_files_is_empty_then_returns_None(tmp_path: Path):
     chdir(tmp_path)
 
     # Act
-    result = solution_path()
+    result = DotnetPath.solution_path()
 
     # Assert
     assert result is None
 
-#endregion solution_path
+# endregion solution_path
 
-#region solution_dir
+# region solution_dir
+
 
 @pytest.mark.parametrize(
     argnames=["path", "file"],
     argvalues=[
         ["dotnet", "Api.sln"],
-        ["dotnet/api","Api.sln"],
-        ["","Api.sln"],
-        ["dotnet/Cli","Cli.sln"]
-])
+        ["dotnet/api", "Api.sln"],
+        ["", "Api.sln"],
+        ["dotnet/Cli", "Cli.sln"]
+    ])
 def test_solution_dir_when_sln_file_exists_then_returns_file_path(tmp_path: Path, path: str, file: str):
     # Arrange
     dotnet_path = tmp_path / path
@@ -78,7 +83,9 @@ def test_solution_dir_when_sln_file_exists_then_returns_file_path(tmp_path: Path
     result = solution_dir()
 
     # Assert
-    assert result == str(Path(path)).replace(".", "") # Replace relative annotation
+    assert result == str(Path(path)).replace(
+        ".", "")  # Replace relative annotation
+
 
 def test_solution_dir_when_files_is_empty_then_returns_None(tmp_path: Path):
     # Arrange
@@ -94,18 +101,19 @@ def test_solution_dir_when_files_is_empty_then_returns_None(tmp_path: Path):
     # Assert
     assert result is None
 
-#endregion solution_dir
+# endregion solution_dir
 
-#region web_project_file_path
+# region web_project_file_path
+
 
 @pytest.mark.parametrize(
     argnames=["path", "file"],
     argvalues=[
         ["dotnet", "Web.csproj"],
-        ["dotnet/api/Presentation/Web","Web.csproj"],
-        ["","Random.csproj"],
-        ["random","Web.csproj"]
-])
+        ["dotnet/api/Presentation/Web", "Web.csproj"],
+        ["", "Random.csproj"],
+        ["random", "Web.csproj"]
+    ])
 def test_web_project_file_path_when_sln_file_exists_then_returns_file_path(tmp_path: Path, path: str, file: str):
     # Arrange
     dotnet_path = tmp_path / path
@@ -120,6 +128,7 @@ def test_web_project_file_path_when_sln_file_exists_then_returns_file_path(tmp_p
     # Assert
     assert result == str(proj_file_path.relative_to(tmp_path))
 
+
 def test_web_project_file_path_when_files_is_empty_then_returns_None(tmp_path: Path):
     # Arrange
     dotnet_path = tmp_path / fake.file_path(depth=2)
@@ -134,18 +143,19 @@ def test_web_project_file_path_when_files_is_empty_then_returns_None(tmp_path: P
     # Assert
     assert result is None
 
-#endregion web_project_file_path
+# endregion web_project_file_path
 
-#region web_project_dir
+# region web_project_dir
+
 
 @pytest.mark.parametrize(
     argnames=["path", "file"],
     argvalues=[
         ["dotnet", "Web.csproj"],
-        ["dotnet/api/Presentation/Web","Web.csproj"],
-        ["","Random.csproj"],
-        ["random","Web.csproj"]
-])
+        ["dotnet/api/Presentation/Web", "Web.csproj"],
+        ["", "Random.csproj"],
+        ["random", "Web.csproj"]
+    ])
 def test_web_project_file_path_when_sln_file_exists_then_returns_file_path(tmp_path: Path, path: str, file: str):
     # Arrange
     dotnet_path = tmp_path / path
@@ -159,6 +169,7 @@ def test_web_project_file_path_when_sln_file_exists_then_returns_file_path(tmp_p
 
     # Assert
     assert result == str(dotnet_path.relative_to(tmp_path)).replace(".", "")
+
 
 def test_web_project_file_path_when_files_is_empty_then_returns_None(tmp_path: Path):
     # Arrange
@@ -174,4 +185,4 @@ def test_web_project_file_path_when_files_is_empty_then_returns_None(tmp_path: P
     # Assert
     assert result is None
 
-#endregion web_project_dir
+# endregion web_project_dir

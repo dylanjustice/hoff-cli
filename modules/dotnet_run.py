@@ -5,7 +5,7 @@ from models.options.dotnet_run_options import DotnetRunOptions
 from models.result import Result
 
 from modules.dotnet_clean import DotnetClean
-from modules.dotnet_path import solution_path, web_project_dir
+from modules.dotnet_path import DotnetPath
 from modules.dotnet_restore import DotnetRestore
 
 run_cmd = ["dotnet", "run", "--no-restore"]
@@ -26,7 +26,7 @@ class DotnetRun:
         if options.path:
             os.chdir(options.path)
 
-        path = solution_path()
+        path = DotnetPath.solution_path()
 
         if path is None:
             return Result(1, self.ERR_SLN_NOT_FOUND)
@@ -38,7 +38,7 @@ class DotnetRun:
         if options.restore:
             DotnetRestore.run(path)
 
-        path = web_project_dir()
+        path = DotnetPath.web_project_dir()
 
         cmd = run_cmd if not options.build else build_cmd
 
