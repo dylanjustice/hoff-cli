@@ -24,6 +24,7 @@ web_project_file_path_globs = [
 ]
 
 class DotnetPath:
+
     def solution_path():
         for pattern in solution_file_path_globs:
             files = glob.glob(pattern)
@@ -32,7 +33,7 @@ class DotnetPath:
             continue
         return None
 
-
+    @classmethod
     def solution_dir(self):
         path = self.solution_path()
         if path is None:
@@ -50,6 +51,7 @@ class DotnetPath:
         return None
 
 
+    @classmethod
     def web_project_dir(self):
         path = self.web_project_file_path()
         if path is None:

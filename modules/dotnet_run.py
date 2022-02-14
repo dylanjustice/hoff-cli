@@ -19,6 +19,7 @@ class DotnetRun:
 
     # endregion Constants
 
+    @classmethod
     def run(self, options: DotnetRunOptions) -> Result:
         """Run a .NET project"""
         cwd = os.getcwd()

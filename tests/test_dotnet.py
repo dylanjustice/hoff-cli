@@ -55,7 +55,10 @@ def test_when_dotnet_called_given_run_arg_then_runs_dotnet_project(monkeypatch: 
     # Arrange
     runner = CliRunner()
 
-    monkeypatch.setattr(DotnetRun, "run", lambda: Result(status_code=0))
+    def mockResult(*args):
+        return Result(status_code=0)
+
+    monkeypatch.setattr(DotnetRun, "run", value=mockResult)
 
     # Act
     result = runner.invoke(dotnet, ["run"])
