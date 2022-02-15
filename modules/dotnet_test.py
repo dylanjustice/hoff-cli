@@ -9,7 +9,7 @@ class DotnetTest:
     ERR_NOT_FOUND = "Solution file not found"
     ERR_TEST_FAILED = "Test run failed. Check output for more information"
     SUCCESS = "Test suite completed successfully"
-    CMD = ["dotnet", "test", "--no-build", "--no-restore"]
+    CMD = ["dotnet", "test", "--no-restore"]
     COVERAGE_OPTIONS = [
         "--collect:'XPlat Code Coverage' -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura"]
 
