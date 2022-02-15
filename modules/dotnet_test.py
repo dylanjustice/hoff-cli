@@ -10,8 +10,7 @@ class DotnetTest:
     ERR_TEST_FAILED = "Test run failed. Check output for more information"
     SUCCESS = "Test suite completed successfully"
     CMD = ["dotnet", "test", "--no-restore"]
-    COVERAGE_OPTIONS = [
-        "--collect:'XPlat Code Coverage' -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura"]
+    COVERAGE_OPTIONS = "--collect:'XPlat Code Coverage' -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura"
 
     @classmethod
     def run(this, path: str, filter: str, coverage: bool) -> Result:

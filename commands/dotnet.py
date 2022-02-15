@@ -40,7 +40,7 @@ def list_runtimes():
 def run(restore, clean, build, path, watch):
     """Run dotnet project or solution
 
-    PATH is the relative path to  a solution or project
+    PATH is the relative path to a solution or project
     """
     options = DotnetRunOptions(
         build=build,
