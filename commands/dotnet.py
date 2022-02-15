@@ -55,7 +55,6 @@ def run(restore, clean, build, path, watch):
         exit(result.status_code)
 
 
-@click.option("--ci", is_flag=True, help="")
 @click.option("--coverage", is_flag=True)
 @click.option("--filter")
 @dotnet.command()

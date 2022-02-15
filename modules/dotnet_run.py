@@ -49,3 +49,5 @@ class DotnetRun:
         subprocess.run(cmd)
 
         os.chdir(cwd)
+
+        return Result(0)
