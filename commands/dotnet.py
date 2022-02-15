@@ -57,9 +57,14 @@ def run(restore, clean, build, path, watch):
 
 @click.option("--coverage", is_flag=True)
 @click.option("--filter")
+@click.argument("path", required=False)
 @dotnet.command()
-def test(ci, filter, coverage):
-    result: Result = DotnetTest.run(ci, filter, coverage)
+def test(path, filter, coverage):
+    """Run dotnet tests on a project or solution
+
+    PATH is the relative path to a solution or project
+    """
+    result: Result = DotnetTest.run(path, filter, coverage)
     if result.hasError():
         error(result.message)
         exit(result.status_code)

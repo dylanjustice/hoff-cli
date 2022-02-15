@@ -21,7 +21,6 @@ def test_when_solution_file_exists_given_no_options_then_calls_dotnet_cli(tmp_pa
     # Arrange
     sln_file_path = tmp_path / "My.sln"
     sln_file_path.touch()
-    args = DotnetTest.CMD
     os.chdir(tmp_path)
     subprocess.run = MagicMock(
         return_value=CompletedProcess(mock.ANY, returncode=0))
@@ -38,7 +37,6 @@ def test_when_subprocess_fails_then_returns_basic_error(tmp_path: Path):
     # Arrange
     sln_file_path = tmp_path / "My.sln"
     sln_file_path.touch()
-    args = DotnetTest.CMD
     os.chdir(tmp_path)
     subprocess.run = MagicMock(
         return_value=CompletedProcess(mock.ANY, returncode=1))
