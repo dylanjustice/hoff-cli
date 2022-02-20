@@ -1,4 +1,5 @@
 from commands.dotnet import dotnet
+from commands.copy import copy
 import pkg_resources
 import click
 
@@ -17,6 +18,7 @@ def main():
         """
 
 main.add_command(dotnet)
+main.add_command(copy)
 
 @main.command()
 def version():

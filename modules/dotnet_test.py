@@ -13,7 +13,7 @@ class DotnetTest:
     COVERAGE_OPTIONS = "--collect:'XPlat Code Coverage' -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura"
 
     @classmethod
-    def run(this, path: str, filter: str, coverage: bool) -> Result:
+    def run(this, filter: str, coverage: bool, path: str=None) -> Result:
         """Runs dotnet test runner on the undefined solution (via dotnet test --no-build --no-restore)"""
         if path is not None:
             os.chdir(path)
@@ -22,6 +22,9 @@ class DotnetTest:
             return Result(1, "Solution file not found")
 
         this.CMD.append(sln_path)
+
+        if filter is not None:
+            this.CMD.append("--filter" + filter)
 
         if coverage == True:
             this.CMD.append(this.COVERAGE_OPTIONS)
