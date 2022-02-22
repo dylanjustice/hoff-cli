@@ -44,7 +44,6 @@ def test_when_source_is_file_then_copies_file_to_destination(tmp_path: Path, fak
     source_file_path: Path = source / source_file_name
     source_file_path.touch()
 
-
     # Act
     result = runner.invoke(copy, [source_file_path.as_posix(), dest.as_posix()])
 
@@ -71,7 +70,6 @@ def test_when_source_is_directory_and_destination_is_directory_then_copies_recur
         source_file_path: Path = source / source_file_name
         source_file_path.touch()
         files.append(source_file_path)
-
 
     # Act
     result = runner.invoke(copy, [source_file_path.as_posix(), dest.as_posix()])
