@@ -1,5 +1,4 @@
 import subprocess
-
 import click
 from models.options.dotnet_run_options import DotnetRunOptions
 from models.result import Result

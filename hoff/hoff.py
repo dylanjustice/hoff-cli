@@ -1,9 +1,12 @@
-from commands.dotnet import dotnet
-from commands.copy import copy
 import pkg_resources
 import click
 
-#region Commands
+from commands.dotnet import dotnet
+from commands.copy import copy
+from commands.webpack import webpack
+
+# region Commands
+
 
 @click.group()
 def main():
@@ -17,8 +20,11 @@ def main():
         #    ######  ####    ##   ######      #   #    # ######    #    #  ####  #      #      ###
         """
 
+
 main.add_command(dotnet)
 main.add_command(copy)
+main.add_command(webpack)
+
 
 @main.command()
 def version():
@@ -26,5 +32,4 @@ def version():
     version = pkg_resources.require("hoff-cli")[0].version
     click.echo(message="[hoff-cli] version: " + version, color=True)
 
-#endregion Commands
-
+# endregion Commands
