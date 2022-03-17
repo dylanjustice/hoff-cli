@@ -21,7 +21,7 @@ def run(clean, restore, path):
 
 
 @webpack.command()
-@click.argument("path", type=click.Path(exists=True))
+@click.argument("path", type=click.Path(exists=True), required=False)
 def clean(path):
     """Clean npm dependencies by removing node_modules in the working directory"""
     NodeClean.run(path)
@@ -35,7 +35,7 @@ def publish():
 
 
 @click.option("--ci", is_flag=True, help="Clean and restore npm dependencies (via npm ci --no-optional) in the current directory")
-@click.argument("path", type=click.Path(exists=True))
+@click.argument("path", type=click.Path(exists=True), required=False)
 @webpack.command()
 def restore(path, ci):
     """Restore npm dependencies (via npm install) in the current directory"""

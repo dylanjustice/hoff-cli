@@ -91,6 +91,10 @@ When you are ready to distribute your Python package, build a wheel with:
 python setup.py bdist_wheel
 ```
 
+```
+pip install --editable .
+```
+
 > Alternatively, you can add the `--universal` option to the `bdist_wheel` command to build a "univeral" distribution that can be used with both Python 3.x and 2.7.x.
 
 The wheel will be generated in th `dist` directory.
