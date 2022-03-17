@@ -13,7 +13,7 @@ def webpack():
 
 @click.option("-c", "--clean", is_flag=True, help="Clean npm dependencies by removing node_modules in the working directory")
 @click.option("-R", "--restore", is_flag=True, help="Restore npm dependencies (via npm install) in the current directory")
-@click.argument("path", type=click.Path(exists=True))
+@click.argument("path", type=click.Path(exists=True), required=False)
 @webpack.command()
 def run(clean, restore, path):
     """Run project via npm run"""
