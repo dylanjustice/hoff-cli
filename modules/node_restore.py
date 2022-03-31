@@ -10,7 +10,9 @@ class NodeRestore:
     ERR_UNEXPECTED = "There was an unexpected error. Please review the output and try again."
     MSG_SUCCESS = "npm packages restored"
 
-    @classmethod
+    def __init__(self) -> None:
+        pass
+
     def run(self, path: str, ci_mode: bool = False) -> Result:
         cmd = self.CI_CMD if ci_mode else self.CMD
         os.chdir(path)

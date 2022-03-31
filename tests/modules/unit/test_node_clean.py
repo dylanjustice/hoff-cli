@@ -14,7 +14,7 @@ tmp_path = Path("tmp")
 
 def test_run_when_node_modules_does_not_exist_then_returns_without_error(tmp_path: Path):
     # Arrange & Act
-    result = NodeClean.run(path=tmp_path)
+    result = NodeClean().run(path=tmp_path)
 
     # Assert
     assert result.hasError() == False
@@ -35,7 +35,7 @@ def test_run_removes_directory_and_returns_without_error(tmp_path: Path):
         dir_name.mkdir(parents=True, exist_ok=True)
         submodule.touch()
     # Act
-    result = NodeClean.run(path=tmp_path)
+    result = NodeClean().run(path=tmp_path)
 
     # Assert
     assert result.hasError() == False

@@ -9,7 +9,7 @@ def test_dotnet_run_when_path_is_none_then_returns_error_result():
     options = DotnetRunOptions(
         build=False, clean=False, path="", restore=False, watch=False)
 
-    result = DotnetRun.run(options)
+    result = DotnetRun().run(options)
 
     # Assert
     assert result.status_code == 1

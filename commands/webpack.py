@@ -3,6 +3,7 @@ import click
 from modules.echo import warn
 from modules.node_clean import NodeClean
 from modules.node_restore import NodeRestore
+from modules.webpack_publish import WebpackPublish
 from modules.webpack_run import WebpackRun
 
 
@@ -17,21 +18,21 @@ def webpack():
 @webpack.command()
 def run(clean, restore, path):
     """Run project via npm run"""
-    WebpackRun.run(clean, restore, path)
+    WebpackRun().run(clean, restore, path)
 
 
 @webpack.command()
 @click.argument("path", type=click.Path(exists=True), required=False)
 def clean(path):
     """Clean npm dependencies by removing node_modules in the working directory"""
-    NodeClean.run(path)
+    NodeClean().run(path)
 
 
 @click.option("--no-restore", help="Skip clean and restore the package prior to running a production build")
 @webpack.command()
-def publish():
+def publish(no_restore):
     """Publishes a release build of the frontend project (via npm run build) in frontend"""
-    warn("Command not yet implemented")
+    WebpackPublish().run(restore=not no_restore)
 
 
 @click.option("--ci", is_flag=True, help="Clean and restore npm dependencies (via npm ci --no-optional) in the current directory")
@@ -39,4 +40,4 @@ def publish():
 @webpack.command()
 def restore(path, ci):
     """Restore npm dependencies (via npm install) in the current directory"""
-    NodeRestore.run(path, ci)
+    NodeRestore().run(path, ci)

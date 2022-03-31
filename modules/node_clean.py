@@ -7,7 +7,9 @@ from modules.echo import error, info
 class NodeClean:
     ERR_UNABLE_TO_DELETE = "Error deleting node_modules"
 
-    @classmethod
+    def __init__(self) -> None:
+        pass
+
     def run(self, path: str) -> Result:
         node_modules = path / "node_modules"
 
@@ -19,5 +21,3 @@ class NodeClean:
             return Result(1, self.ERR_UNABLE_TO_DELETE, ex)
 
         return Result(0)
-
-

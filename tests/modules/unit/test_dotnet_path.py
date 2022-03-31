@@ -15,6 +15,8 @@ from modules.dotnet_path import DotnetPath
 Faker.seed()
 fake = Faker()
 
+_sut = DotnetPath()
+
 # endregion Setup
 
 # region solution_path
@@ -37,7 +39,7 @@ def test_solution_path_when_sln_file_exists_then_returns_file_path(tmp_path: Pat
     chdir(tmp_path)
 
     # Act
-    result = DotnetPath.solution_path()
+    result = _sut.solution_path()
 
     # Assert
     assert result == str(sln_file_path.relative_to(tmp_path))
@@ -52,7 +54,7 @@ def test_solution_path_when_files_is_empty_then_returns_None(tmp_path: Path):
     chdir(tmp_path)
 
     # Act
-    result = DotnetPath.solution_path()
+    result = _sut.solution_path()
 
     # Assert
     assert result is None
@@ -79,7 +81,7 @@ def test_solution_dir_when_sln_file_exists_then_returns_file_path(tmp_path: Path
     chdir(tmp_path)
 
     # Act
-    result = DotnetPath.solution_dir()
+    result = _sut.solution_dir()
 
     # Assert
     assert result == str(Path(path)).replace(
@@ -95,7 +97,7 @@ def test_solution_dir_when_files_is_empty_then_returns_None(tmp_path: Path):
     chdir(dotnet_path)
 
     # Act
-    result = DotnetPath.solution_dir()
+    result = _sut.solution_dir()
 
     # Assert
     assert result is None
@@ -122,7 +124,7 @@ def test_web_project_file_path_when_sln_file_exists_then_returns_file_path(tmp_p
     chdir(tmp_path)
 
     # Act
-    result = DotnetPath.web_project_file_path()
+    result = _sut.web_project_file_path()
 
     # Assert
     assert result == str(proj_file_path.relative_to(tmp_path))
@@ -137,7 +139,7 @@ def test_web_project_file_path_when_files_is_empty_then_returns_None(tmp_path: P
     chdir(tmp_path)
 
     # Act
-    result = DotnetPath.web_project_file_path()
+    result = _sut.web_project_file_path()
 
     # Assert
     assert result is None
@@ -164,7 +166,7 @@ def test_web_project_file_path_when_sln_file_exists_then_returns_file_path(tmp_p
     chdir(tmp_path)
 
     # Act
-    result = DotnetPath.web_project_dir()
+    result = _sut.web_project_dir()
 
     # Assert
     assert result == str(dotnet_path.relative_to(tmp_path)).replace(".", "")
@@ -179,7 +181,7 @@ def test_web_project_file_path_when_files_is_empty_then_returns_None(tmp_path: P
     chdir(tmp_path)
 
     # Act
-    result = DotnetPath.web_project_dir()
+    result = _sut.web_project_dir()
 
     # Assert
     assert result is None

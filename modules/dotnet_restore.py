@@ -5,6 +5,9 @@ from modules.echo import error, info, success
 cmd = ["dotnet", "restore"]
 
 class DotnetRestore:
+    def __init__(self) -> None:
+        pass
+
     def run(path=""):
         """Restore the dotnet solution from the root of the project via dotnet restore """
         if path:

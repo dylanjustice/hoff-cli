@@ -11,6 +11,9 @@ cmd = ["dotnet", "clean"]
 
 
 class DotnetClean:
+    def __init__(self) -> None:
+        pass
+
     def run(path=""):
         if path:
             cmd.append(path)

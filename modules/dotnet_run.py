@@ -19,15 +19,18 @@ class DotnetRun:
 
     # endregion Constants
 
-    @classmethod
+    def __init__(self) -> None:
+        pass
+
     def run(self, options: DotnetRunOptions) -> Result:
         """Run a .NET project"""
         cwd = os.getcwd()
+        _dotnetPath = DotnetPath()
 
         if options.path:
             os.chdir(options.path)
 
-        path = DotnetPath.solution_path()
+        path = _dotnetPath.solution_path()
 
         if path is None:
             return Result(1, self.ERR_SLN_NOT_FOUND)
@@ -39,7 +42,7 @@ class DotnetRun:
         if options.restore:
             DotnetRestore.run(path)
 
-        path = DotnetPath.web_project_dir()
+        path = _dotnetPath.web_project_dir()
 
         cmd = run_cmd if not options.build else build_cmd
 

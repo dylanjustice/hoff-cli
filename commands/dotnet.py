@@ -48,7 +48,7 @@ def run(restore, clean, build, path, watch):
         restore=restore,
         watch=watch
     )
-    result = DotnetRun.run(options)
+    result = DotnetRun().run(options)
     if result.hasError():
         error(message=result.message)
         exit(result.status_code)
@@ -63,7 +63,7 @@ def test(path, filter, coverage):
 
     PATH is the relative path to a solution or project
     """
-    result: Result = DotnetTest.run(path, filter, coverage)
+    result: Result = DotnetTest().run(path, filter, coverage)
     if result.hasError():
         error(result.message)
         exit(result.status_code)
