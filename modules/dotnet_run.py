@@ -19,33 +19,31 @@ class DotnetRun:
 
     # endregion Constants
 
-    def __init__(self, dotnetClean: DotnetClean = None, dotnetPath: DotnetPath = None, dotnetRestore: DotnetRestore = None) -> None:
-        self._dotnetPath = dotnetPath or DotnetPath()
-        self._dotnetClean = dotnetClean or DotnetClean()
-        self._dotnetRestore = dotnetRestore or DotnetRestore()
-        pass
+    def __init__(self, dotnet_clean: DotnetClean = None, dotnet_path: DotnetPath = None, _dotnet_restore: DotnetRestore = None) -> None:
+        self._dotnet_path = dotnet_path or DotnetPath()
+        self._dotnet_clean = dotnet_clean or DotnetClean()
+        self._dotnet_restore = _dotnet_restore or DotnetRestore()
 
     def run(self, options: DotnetRunOptions) -> Result:
         """Run a .NET project"""
         cwd = os.getcwd()
-        _dotnetPath = DotnetPath()
 
         if options.path:
             os.chdir(options.path)
 
-        path = _dotnetPath.solution_path()
+        path = self._dotnet_path.solution_path()
 
         if path is None:
             return Result(1, self.ERR_SLN_NOT_FOUND)
 
         if options.clean:
-            result = self._dotnetClean.run(path)
+            result = self._dotnet_clean.run(path)
             if not options.build and not options.restore:
                 exit(result)
         if options.restore:
-            self._dotnetRestore.run(path)
+            self._dotnet_restore.run(path)
 
-        path = _dotnetPath.web_project_dir()
+        path = self._dotnet_path.web_project_dir()
 
         cmd = run_cmd if not options.build else build_cmd
 

@@ -16,19 +16,19 @@ class WebpackPublish:
     SUCCESS_MSG = "Frontend build successful!"
     BUILD_CMD = ["npm", "run", "build"]
 
-    def __init__(self, frontendPath: FrontendPath = None, nodeRestore: NodeRestore = None) -> None:
-        self._frontendPath = frontendPath or FrontendPath()
-        self._nodeRestore = nodeRestore or NodeRestore()
+    def __init__(self, frontend_path: FrontendPath = None, node_restore: NodeRestore = None) -> None:
+        self._frontend_path = frontend_path or FrontendPath()
+        self._node_restore = node_restore or NodeRestore()
 
     def run(self, restore: bool, path: str = "") -> Result:
-        publish_dir = self._frontendPath.get_frontend_path(path)
+        publish_dir = self._frontend_path.get_frontend_path(path)
         info("Cleaning publish directory: {0}".format(path))
         clean_result = self.clean_publish_directory(path=path)
         if clean_result.hasError():
             return clean_result
 
         if restore:
-            restore_result = self._nodeRestore.run(ci_mode=True, path=path)
+            restore_result = self._node_restore.run(ci_mode=True, path=path)
             if restore_result.hasError():
                 return restore_result
 

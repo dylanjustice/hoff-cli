@@ -12,14 +12,14 @@ class DotnetTest:
     CMD = ["dotnet", "test", "--no-restore"]
     COVERAGE_OPTIONS = "--collect:'XPlat Code Coverage' -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura"
 
-    def __init__(self, dotnetPath: DotnetPath = None) -> None:
-        self._dotnetPath = dotnetPath or DotnetPath()
+    def __init__(self, dotnet_path: DotnetPath = None) -> None:
+        self._dotnet_path = dotnet_path or DotnetPath()
 
     def run(self, filter: str, coverage: bool, path: str = "") -> Result:
         """Runs dotnet test runner on the undefined solution (via dotnet test --no-build --no-restore)"""
         if path:
             os.chdir(path)
-        sln_path = self._dotnetPath.solution_path()
+        sln_path = self._dotnet_path.solution_path()
         if sln_path is None:
             return Result(1, "Solution file not found")
 
