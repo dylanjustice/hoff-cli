@@ -4,8 +4,6 @@ from models.result import Result
 
 from modules.dotnet_path import DotnetPath
 
-_dotnetPath = DotnetPath()
-
 
 class DotnetTest:
     ERR_NOT_FOUND = "Solution file not found"
@@ -14,15 +12,14 @@ class DotnetTest:
     CMD = ["dotnet", "test", "--no-restore"]
     COVERAGE_OPTIONS = "--collect:'XPlat Code Coverage' -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura"
 
-    def __init__(self) -> None:
-        self._dotnetPath = DotnetPath()
-        pass
+    def __init__(self, dotnetPath: DotnetPath = None) -> None:
+        self._dotnetPath = dotnetPath or DotnetPath()
 
     def run(self, filter: str, coverage: bool, path: str = "") -> Result:
         """Runs dotnet test runner on the undefined solution (via dotnet test --no-build --no-restore)"""
         if path:
             os.chdir(path)
-        sln_path = _dotnetPath.solution_path()
+        sln_path = self._dotnetPath.solution_path()
         if sln_path is None:
             return Result(1, "Solution file not found")
 

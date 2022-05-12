@@ -29,10 +29,11 @@ def clean(path):
 
 
 @click.option("--no-restore", help="Skip clean and restore the package prior to running a production build")
+@click.argument("path", type=click.Path(exists=True), required=False)
 @webpack.command()
-def publish(no_restore):
+def publish(no_restore, path):
     """Publishes a release build of the frontend project (via npm run build) in frontend"""
-    WebpackPublish().run(restore=not no_restore)
+    WebpackPublish().run(restore=not no_restore, path=path)
 
 
 @click.option("--ci", is_flag=True, help="Clean and restore npm dependencies (via npm ci --no-optional) in the current directory")

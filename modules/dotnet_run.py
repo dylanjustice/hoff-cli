@@ -19,7 +19,10 @@ class DotnetRun:
 
     # endregion Constants
 
-    def __init__(self) -> None:
+    def __init__(self, dotnetClean: DotnetClean = None, dotnetPath: DotnetPath = None, dotnetRestore: DotnetRestore = None) -> None:
+        self._dotnetPath = dotnetPath or DotnetPath()
+        self._dotnetClean = dotnetClean or DotnetClean()
+        self._dotnetRestore = dotnetRestore or DotnetRestore()
         pass
 
     def run(self, options: DotnetRunOptions) -> Result:
@@ -36,11 +39,11 @@ class DotnetRun:
             return Result(1, self.ERR_SLN_NOT_FOUND)
 
         if options.clean:
-            result = DotnetClean.run(path)
+            result = self._dotnetClean.run(path)
             if not options.build and not options.restore:
                 exit(result)
         if options.restore:
-            DotnetRestore.run(path)
+            self._dotnetRestore.run(path)
 
         path = _dotnetPath.web_project_dir()
 
